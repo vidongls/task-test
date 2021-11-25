@@ -112,10 +112,10 @@ function DocSo(number) {
 }
 
 function main(input) {
-  return DocSo(checknumb(input))
+  return DocSo(convertNum(input))
 }
 
-function checknumb(input) {
+function convertNum(input) {
   let s = input.split('')
   s.forEach((element) => {
     if (s[0].includes(0)) {
@@ -126,6 +126,6 @@ function checknumb(input) {
   s = s.join('')
   return +s
 }
-console.log(main('100000'))
+console.log(main('000303'))
 // console.log(typeof !Number(0))
 module.exports = main
