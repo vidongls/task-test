@@ -1,124 +1,5 @@
-const numbers = [
-  ' không ',
-  ' một ',
-  ' hai ',
-  ' ba ',
-  ' bốn ',
-  ' năm ',
-  ' sáu ',
-  ' bảy ',
-  ' tám ',
-  ' chín ',
-]
-
-const readBigNumber = [
-  '',
-  ' nghìn ',
-  ' triệu ',
-  ' tỷ ',
-  ' nghìn tỷ ',
-  ' triệu tỷ',
-]
-function readThreeNumbers(baso) {
-  let hundred
-  let ten
-  let unit
-  let result = ''
-  hundred = parseInt(baso / 100)
-  ten = parseInt((baso % 100) / 10)
-  unit = baso % 10
-
-  if (hundred != 0) {
-    result += numbers[hundred] + ' trăm '
-    if (ten == 0 && unit != 0) result += ' linh '
-  }
-  if (ten != 0 && ten != 1) {
-    result += numbers[ten] + ' mươi '
-    if (ten == 0 && unit != 0) result = result + ' linh '
-  }
-  if (ten == 1) result += ' mười '
-  switch (unit) {
-    case 1:
-      if (ten != 0 && ten != 1) {
-        result += ' mốt '
-      } else {
-        result += numbers[unit]
-      }
-      break
-    case 5:
-      if (ten == 0) {
-        result += numbers[unit]
-      } else {
-        result += ' lăm '
-      }
-      break
-    default:
-      if (unit != 0) {
-        result += numbers[unit]
-      }
-      break
-  }
-  return result
-}
-
-function readAllNumber(number) {
-  let lan = 0
-  let i = 0
-  let so = 0
-  let result = ''
-  let tmp = ''
-  let index = []
-  if (!Number(number) && number !== 0) return 'Không phải số!'
-  if (number < 0) return 'Số âm!'
-  if (number === 0) return 'Không'
-  if (number > 0) {
-    so = number
-  } else {
-    so = -number
-  }
-  if (number > 999999999999999) {
-    return 'Số quá lớn!'
-  }
-
-  index[5] = Math.floor(so / 1000000000000000)
-  if (isNaN(index[5])) index[5] = '0'
-  so = so - parseFloat(index[5].toString()) * 1000000000000000
-  index[4] = Math.floor(so / 1000000000000)
-  if (isNaN(index[4])) index[4] = '0'
-  so = so - parseFloat(index[4].toString()) * 1000000000000
-  index[3] = Math.floor(so / 1000000000)
-  if (isNaN(index[3])) index[3] = '0'
-  so = so - parseFloat(index[3].toString()) * 1000000000
-  index[2] = parseInt(so / 1000000)
-  if (isNaN(index[2])) index[2] = '0'
-  index[1] = parseInt((so % 1000000) / 1000)
-  if (isNaN(index[1])) index[1] = '0'
-  index[0] = parseInt(so % 1000)
-  if (isNaN(index[0])) index[0] = '0'
-  if (index[5] > 0) {
-    lan = 5
-  } else if (index[4] > 0) {
-    lan = 4
-  } else if (index[3] > 0) {
-    lan = 3
-  } else if (index[2] > 0) {
-    lan = 2
-  } else if (index[1] > 0) {
-    lan = 1
-  } else {
-    lan = 0
-  }
-  for (i = lan; i >= 0; i--) {
-    tmp = readThreeNumbers(index[i])
-    result += tmp
-    if (index[i] > 0) result += readBigNumber[i]
-  }
-  result = result.trim().substring(0, 1).toUpperCase() + result.substring(2)
-  return result
-}
-
 function readNumber2Word(input) {
-  return readAllNumber(convertNum(input)).trim().replace(/  /g, ' ')
+  return DOCSO.doc(convertNum(input)).trim().replace(/  /g, ' ')
 }
 
 function convertNum(input) {
@@ -137,3 +18,76 @@ function convertNum(input) {
 }
 
 module.exports = readNumber2Word
+var DOCSO = (function () {
+  var t = [
+      'không',
+      'một',
+      'hai',
+      'ba',
+      'bốn',
+      'năm',
+      'sáu',
+      'bảy',
+      'tám',
+      'chín',
+    ],
+    r = function (r, n) {
+      var o = '',
+        a = Math.floor(r / 10),
+        e = r % 10
+      return (
+        a > 1
+          ? ((o = ' ' + t[a] + ' mươi'), 1 == e && (o += ' mốt'))
+          : 1 == a
+          ? ((o = ' mười'), 1 == e && (o += ' một'))
+          : n && e > 0 && (o = ' linh'),
+        5 == e && a >= 1
+          ? (o += ' lăm')
+          : 4 == e && a >= 1
+          ? (o += ' tư')
+          : (e > 1 || (1 == e && 0 == a)) && (o += ' ' + t[e]),
+        o
+      )
+    },
+    n = function (n, o) {
+      var a = '',
+        e = Math.floor(n / 100),
+        n = n % 100
+      return (
+        o || e > 0
+          ? ((a = ' ' + t[e] + ' trăm'), (a += r(n, !0)))
+          : (a = r(n, !1)),
+        a
+      )
+    },
+    o = function (t, r) {
+      var o = '',
+        a = Math.floor(t / 1e6),
+        t = t % 1e6
+      a > 0 && ((o = n(a, r) + ' triệu'), (r = !0))
+      var e = Math.floor(t / 1e3),
+        t = t % 1e3
+      return (
+        e > 0 && ((o += n(e, r) + ' nghìn'), (r = !0)),
+        t > 0 && (o += n(t, r)),
+        o
+      )
+    }
+  return {
+    doc: function (r) {
+      if (0 == r) return t[0]
+      if (!Number(r)) return 'Không phải số'
+      if (r < 0) return 'Số âm!'
+      var n = '',
+        a = ''
+      do
+        (ty = r % 1e9),
+          (r = Math.floor(r / 1e9)),
+          (n = r > 0 ? o(ty, !0) + a + n : o(ty, !1) + a + n),
+          (a = ' tỷ')
+      while (r > 0)
+      return n.trim()
+    },
+  }
+})()
+console.log(readNumber2Word('023329329'))
