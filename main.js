@@ -1,14 +1,14 @@
 const numbers = [
   ' không ',
-  'một',
-  'hai',
-  'ba',
-  'bốn',
-  'năm',
-  'sáu',
-  'bảy',
-  'tám',
-  'chín',
+  ' một ',
+  ' hai ',
+  ' ba ',
+  ' bốn ',
+  ' năm ',
+  ' sáu ',
+  ' bảy ',
+  ' tám ',
+  ' chín ',
 ]
 
 const readBigNumber = [
@@ -27,20 +27,20 @@ function readThreeNumbers(baso) {
   hundred = parseInt(baso / 100)
   ten = parseInt((baso % 100) / 10)
   unit = baso % 10
-  if (hundred == 0 && ten == 0 && unit == 0) return ''
+
   if (hundred != 0) {
     result += numbers[hundred] + ' trăm '
-    if (ten == 0 && unit != 0) result += 'linh '
+    if (ten == 0 && unit != 0) result += ' linh '
   }
   if (ten != 0 && ten != 1) {
     result += numbers[ten] + ' mươi '
-    if (ten == 0 && unit != 0) result = result + 'linh '
+    if (ten == 0 && unit != 0) result = result + ' linh '
   }
-  if (ten == 1) result += 'mười '
+  if (ten == 1) result += ' mười '
   switch (unit) {
     case 1:
       if (ten != 0 && ten != 1) {
-        result += 'mốt'
+        result += ' mốt '
       } else {
         result += numbers[unit]
       }
@@ -49,7 +49,7 @@ function readThreeNumbers(baso) {
       if (ten == 0) {
         result += numbers[unit]
       } else {
-        result += 'lăm '
+        result += ' lăm '
       }
       break
     default:
@@ -80,6 +80,7 @@ function readAllNumber(number) {
   if (number > 999999999999999) {
     return 'Số quá lớn!'
   }
+
   index[5] = Math.floor(so / 1000000000000000)
   if (isNaN(index[5])) index[5] = '0'
   so = so - parseFloat(index[5].toString()) * 1000000000000000
@@ -113,12 +114,12 @@ function readAllNumber(number) {
     result += tmp
     if (index[i] > 0) result += readBigNumber[i]
   }
-  result = result.substring(0, 1).toUpperCase() + result.substring(1)
+  result = result.trim().substring(0, 1).toUpperCase() + result.substring(2)
   return result
 }
 
 function readNumber2Word(input) {
-  return readAllNumber(convertNum(input))
+  return readAllNumber(convertNum(input)).trim().replace(/  /g, ' ')
 }
 
 function convertNum(input) {
@@ -132,5 +133,5 @@ function convertNum(input) {
   s = s.join('')
   return +s
 }
-// console.log(typeof !Number(0))
+console.log(readNumber2Word('23300034'))
 module.exports = readNumber2Word

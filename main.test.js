@@ -4,7 +4,7 @@ const number2word = require('./main')
 test('Test đọc số', () => {
   expect(number2word('1000')).toMatch(/Một nghìn/),
     expect(number2word('1000000')).toMatch(/Một triệu/),
-    expect(number2word('101000')).toMatch(/Một trăm linh một/),
+    expect(number2word('101000')).toMatch(/Một trăm linh một nghìn/),
     expect(number2word('0')).toMatch(/Không/),
     expect(number2word('109202349394')).toMatch(
       /Một trăm linh chín tỷ hai trăm linh hai triệu ba trăm bốn mươi chín nghìn ba trăm chín mươi bốn/
