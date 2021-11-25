@@ -69,7 +69,6 @@ function readAllNumber(number) {
   let tmp = ''
   let index = []
   if (!Number(number) && number !== 0) return 'Không phải số!'
-
   if (number < 0) return 'Số âm!'
   if (number === 0) return 'Không'
   if (number > 0) {
@@ -123,15 +122,18 @@ function readNumber2Word(input) {
 }
 
 function convertNum(input) {
-  let s = input.split('')
-  s.forEach((element) => {
-    if (s[0].includes(0)) {
-      s.shift()
-    }
-  })
-
-  s = s.join('')
-  return +s
+  if (input.length === 0 || input === ' ') {
+    return 'not num'
+  } else {
+    let s = input.split('')
+    s.forEach((element) => {
+      if (s[0].includes(0)) {
+        s.shift()
+      }
+    })
+    s = s.join('')
+    return +s
+  }
 }
-console.log(readNumber2Word('23300034'))
+
 module.exports = readNumber2Word

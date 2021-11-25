@@ -16,7 +16,7 @@ test('Test đọc số', () => {
     expect(number2word('tetx')).toMatch(/Không phải số/),
     expect(number2word('9999999999999999999999999')).toMatch(/Số quá lớn!/),
     expect(number2word('-2738')).toMatch(/Số âm!/),
-    expect(number2word('null')).toMatch(/Không phải số/),
+    expect(number2word('')).toMatch(/Không phải số/),
     expect(number2word('0000')).toMatch(/Không/),
     expect(number2word('000238238')).toMatch(
       /Hai trăm ba mươi tám nghìn hai trăm ba mươi tám/
