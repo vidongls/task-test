@@ -132,6 +132,5 @@ function convertNum(input) {
   s = s.join('')
   return +s
 }
-console.log(readNumber2Word('1000303'))
 // console.log(typeof !Number(0))
 module.exports = readNumber2Word
