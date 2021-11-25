@@ -18,8 +18,8 @@ function convertNum(input) {
 }
 
 module.exports = readNumber2Word
-var readNum = (function () {
-  var t = [
+const readNum = (function () {
+  const t = [
       'không',
       'một',
       'hai',
