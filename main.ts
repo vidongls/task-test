@@ -48,6 +48,30 @@ const WORD_NUMBERS = [
   'tám',
   'chín',
 ]
+function convertEnglish(n: number): string {
+  if (n < 0) {
+    return `minus ${convertEnglish(-n)}`
+  } else if (n === 0) {
+    return 'zero'
+  } else {
+    let result = ''
+    for (const numeral of NUMERALS) {
+      if (n >= numeral.value) {
+        if (n < 100) {
+          result += numeral.str
+          n -= numeral.value
+          if (n > 0) result += '-'
+        } else {
+          const times = Math.floor(n / numeral.value)
+          result += `${convertEnglish(times)} ${numeral.str}`
+          n -= numeral.value * times
+          if (n > 0) result += ' and '
+        }
+      }
+    }
+    return result
+  }
+}
 
 function readDozen(no: number, isWhole: boolean) {
   let dozen = ''
@@ -127,7 +151,12 @@ function convertVietnamese(no: number) {
 }
 
 function convertToText(n: string): string {
-  //   const code = localStorage.getItem('i18nextLng')
+  // const code = localStorage.getItem('i18nextLng')
+  // if(code.type == 'VI'){}else{ // change to english
+
+  // }else{
+  //  return convertVietnamese(+n).trim()
+  // }
   if (n.length === 0 || n === ' ') {
     return 'Không phải số'
   } else {
@@ -136,4 +165,4 @@ function convertToText(n: string): string {
   }
 }
 module.exports = convertToText
-console.log(convertToText('10001001'))
+console.log(convertToText('00010001001'))
