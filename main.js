@@ -75,7 +75,7 @@ const readNum = (function () {
     }
   return {
     doc: function (r) {
-      if (0 == r) return t[0]
+      if (0 == r) return t[0].substring(0, 1).toUpperCase() + t[0].substring(1)
       if (!Number(r)) return 'Không phải số'
       if (r < 0) return 'Số âm!'
       var n = '',
@@ -86,7 +86,8 @@ const readNum = (function () {
           (n = r > 0 ? o(ty, !0) + a + n : o(ty, !1) + a + n),
           (a = ' tỷ')
       while (r > 0)
-      return n.trim()
+      // n =
+      return n.trim().substring(0, 1).toUpperCase() + n.substring(2)
     },
   }
 })()
