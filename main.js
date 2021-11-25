@@ -11,7 +11,7 @@ const chuso = [
   'chín',
 ]
 
-const solon = ['', ' nghìn ', ' triệu ', ' tỷ ', ' nghìn tỷ', ' triệu tỷ']
+const solon = ['', ' nghìn ', ' triệu ', ' tỷ ', ' nghìn tỷ ', ' triệu tỷ']
 function DocSo3ChuSo(baso) {
   let tram
   let chuc
@@ -42,7 +42,7 @@ function DocSo3ChuSo(baso) {
       if (chuc == 0) {
         KetQua += chuso[donvi]
       } else {
-        KetQua += 'lăm'
+        KetQua += 'lăm '
       }
       break
     default:
@@ -54,22 +54,24 @@ function DocSo3ChuSo(baso) {
   return KetQua
 }
 
-function DocSo(SoTien) {
+function DocSo(number) {
   let lan = 0
   let i = 0
   let so = 0
   let KetQua = ''
   let tmp = ''
   let ViTri = []
-  if (SoTien < 0) return 'Số âm!'
-  if (SoTien == 0) return 'Không'
-  if (SoTien > 0) {
-    so = SoTien
+  if (!Number(number) && number !== 0) return 'Không phải số!'
+
+  if (number < 0) return 'Số âm!'
+  if (number === 0) return 'Không'
+  if (number > 0) {
+    so = number
   } else {
-    so = -SoTien
+    so = -number
   }
-  if (SoTien > 999999999999999) {
-    //SoTien = 0;
+  if (number > 999999999999999) {
+    //number = 0;
     return 'Số quá lớn!'
   }
   ViTri[5] = Math.floor(so / 1000000000000000)
@@ -110,7 +112,20 @@ function DocSo(SoTien) {
 }
 
 function main(input) {
-  return !Number(input) ? 'Không phải số' : DocSo(input)
+  return DocSo(checknumb(input))
 }
 
+function checknumb(input) {
+  let s = input.split('')
+  s.forEach((element) => {
+    if (s[0].includes(0)) {
+      s.shift()
+    }
+  })
+
+  s = s.join('')
+  return +s
+}
+console.log(main('100000'))
+// console.log(typeof !Number(0))
 module.exports = main
