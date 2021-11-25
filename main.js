@@ -67,7 +67,7 @@ function readAllNumber(number) {
   let so = 0
   let result = ''
   let tmp = ''
-  let ViTri = []
+  let index = []
   if (!Number(number) && number !== 0) return 'Không phải số!'
 
   if (number < 0) return 'Số âm!'
@@ -80,40 +80,39 @@ function readAllNumber(number) {
   if (number > 999999999999999) {
     return 'Số quá lớn!'
   }
-  ViTri[5] = Math.floor(so / 1000000000000000)
-  if (isNaN(ViTri[5])) ViTri[5] = '0'
-  so = so - parseFloat(ViTri[5].toString()) * 1000000000000000
-  ViTri[4] = Math.floor(so / 1000000000000)
-  if (isNaN(ViTri[4])) ViTri[4] = '0'
-  so = so - parseFloat(ViTri[4].toString()) * 1000000000000
-  ViTri[3] = Math.floor(so / 1000000000)
-  if (isNaN(ViTri[3])) ViTri[3] = '0'
-  so = so - parseFloat(ViTri[3].toString()) * 1000000000
-  ViTri[2] = parseInt(so / 1000000)
-  if (isNaN(ViTri[2])) ViTri[2] = '0'
-  ViTri[1] = parseInt((so % 1000000) / 1000)
-  if (isNaN(ViTri[1])) ViTri[1] = '0'
-  ViTri[0] = parseInt(so % 1000)
-  if (isNaN(ViTri[0])) ViTri[0] = '0'
-  if (ViTri[5] > 0) {
+  index[5] = Math.floor(so / 1000000000000000)
+  if (isNaN(index[5])) index[5] = '0'
+  so = so - parseFloat(index[5].toString()) * 1000000000000000
+  index[4] = Math.floor(so / 1000000000000)
+  if (isNaN(index[4])) index[4] = '0'
+  so = so - parseFloat(index[4].toString()) * 1000000000000
+  index[3] = Math.floor(so / 1000000000)
+  if (isNaN(index[3])) index[3] = '0'
+  so = so - parseFloat(index[3].toString()) * 1000000000
+  index[2] = parseInt(so / 1000000)
+  if (isNaN(index[2])) index[2] = '0'
+  index[1] = parseInt((so % 1000000) / 1000)
+  if (isNaN(index[1])) index[1] = '0'
+  index[0] = parseInt(so % 1000)
+  if (isNaN(index[0])) index[0] = '0'
+  if (index[5] > 0) {
     lan = 5
-  } else if (ViTri[4] > 0) {
+  } else if (index[4] > 0) {
     lan = 4
-  } else if (ViTri[3] > 0) {
+  } else if (index[3] > 0) {
     lan = 3
-  } else if (ViTri[2] > 0) {
+  } else if (index[2] > 0) {
     lan = 2
-  } else if (ViTri[1] > 0) {
+  } else if (index[1] > 0) {
     lan = 1
   } else {
     lan = 0
   }
   for (i = lan; i >= 0; i--) {
-    tmp = readThreeNumbers(ViTri[i])
+    tmp = readThreeNumbers(index[i])
     result += tmp
-    if (ViTri[i] > 0) result += readBigNumber[i]
+    if (index[i] > 0) result += readBigNumber[i]
   }
-  console.log(ViTri)
   result = result.substring(0, 1).toUpperCase() + result.substring(1)
   return result
 }
