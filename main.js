@@ -1,4 +1,4 @@
-const chuso = [
+const numbers = [
   ' không ',
   'một',
   'hai',
@@ -11,54 +11,61 @@ const chuso = [
   'chín',
 ]
 
-const solon = ['', ' nghìn ', ' triệu ', ' tỷ ', ' nghìn tỷ ', ' triệu tỷ']
-function DocSo3ChuSo(baso) {
-  let tram
-  let chuc
-  let donvi
-  let KetQua = ''
-  tram = parseInt(baso / 100)
-  chuc = parseInt((baso % 100) / 10)
-  donvi = baso % 10
-  if (tram == 0 && chuc == 0 && donvi == 0) return ''
-  if (tram != 0) {
-    KetQua += chuso[tram] + ' trăm '
-    if (chuc == 0 && donvi != 0) KetQua += 'linh '
+const readBigNumber = [
+  '',
+  ' nghìn ',
+  ' triệu ',
+  ' tỷ ',
+  ' nghìn tỷ ',
+  ' triệu tỷ',
+]
+function readThreeNumbers(baso) {
+  let hundred
+  let ten
+  let unit
+  let result = ''
+  hundred = parseInt(baso / 100)
+  ten = parseInt((baso % 100) / 10)
+  unit = baso % 10
+  if (hundred == 0 && ten == 0 && unit == 0) return ''
+  if (hundred != 0) {
+    result += numbers[hundred] + ' trăm '
+    if (ten == 0 && unit != 0) result += 'linh '
   }
-  if (chuc != 0 && chuc != 1) {
-    KetQua += chuso[chuc] + ' mươi '
-    if (chuc == 0 && donvi != 0) KetQua = KetQua + 'linh '
+  if (ten != 0 && ten != 1) {
+    result += numbers[ten] + ' mươi '
+    if (ten == 0 && unit != 0) result = result + 'linh '
   }
-  if (chuc == 1) KetQua += 'mười '
-  switch (donvi) {
+  if (ten == 1) result += 'mười '
+  switch (unit) {
     case 1:
-      if (chuc != 0 && chuc != 1) {
-        KetQua += 'mốt'
+      if (ten != 0 && ten != 1) {
+        result += 'mốt'
       } else {
-        KetQua += chuso[donvi]
+        result += numbers[unit]
       }
       break
     case 5:
-      if (chuc == 0) {
-        KetQua += chuso[donvi]
+      if (ten == 0) {
+        result += numbers[unit]
       } else {
-        KetQua += 'lăm '
+        result += 'lăm '
       }
       break
     default:
-      if (donvi != 0) {
-        KetQua += chuso[donvi]
+      if (unit != 0) {
+        result += numbers[unit]
       }
       break
   }
-  return KetQua
+  return result
 }
 
-function DocSo(number) {
+function readAllNumber(number) {
   let lan = 0
   let i = 0
   let so = 0
-  let KetQua = ''
+  let result = ''
   let tmp = ''
   let ViTri = []
   if (!Number(number) && number !== 0) return 'Không phải số!'
@@ -71,7 +78,6 @@ function DocSo(number) {
     so = -number
   }
   if (number > 999999999999999) {
-    //number = 0;
     return 'Số quá lớn!'
   }
   ViTri[5] = Math.floor(so / 1000000000000000)
@@ -103,16 +109,17 @@ function DocSo(number) {
     lan = 0
   }
   for (i = lan; i >= 0; i--) {
-    tmp = DocSo3ChuSo(ViTri[i])
-    KetQua += tmp
-    if (ViTri[i] > 0) KetQua += solon[i]
+    tmp = readThreeNumbers(ViTri[i])
+    result += tmp
+    if (ViTri[i] > 0) result += readBigNumber[i]
   }
-  KetQua = KetQua.substring(0, 1).toUpperCase() + KetQua.substring(1)
-  return KetQua
+  console.log(ViTri)
+  result = result.substring(0, 1).toUpperCase() + result.substring(1)
+  return result
 }
 
-function main(input) {
-  return DocSo(convertNum(input))
+function readNumber2Word(input) {
+  return readAllNumber(convertNum(input))
 }
 
 function convertNum(input) {
@@ -126,6 +133,6 @@ function convertNum(input) {
   s = s.join('')
   return +s
 }
-console.log(main('000303'))
+console.log(readNumber2Word('1000303'))
 // console.log(typeof !Number(0))
-module.exports = main
+module.exports = readNumber2Word
