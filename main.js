@@ -1,5 +1,5 @@
 function readNumber2Word(input) {
-  return DOCSO.doc(convertNum(input)).trim().replace(/  /g, ' ')
+  return readNum.doc(convertNum(input)).trim().replace(/  /g, ' ')
 }
 
 function convertNum(input) {
@@ -18,7 +18,7 @@ function convertNum(input) {
 }
 
 module.exports = readNumber2Word
-var DOCSO = (function () {
+var readNum = (function () {
   var t = [
       'không',
       'một',
